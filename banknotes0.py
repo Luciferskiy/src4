@@ -2,11 +2,11 @@ import csv
 import random
 
 from sklearn import svm
-from sklearn.linear_model import Perception
+from sklearn.linear_model import Perceptron
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeightborsClassifier
 
-# model = Perceprtion()
+# model = Perceptron()
 # model = svm.SVC()
 # model = KNeighborsClassifier(n_neighbors=1)
 model = GaussianNB()
@@ -24,15 +24,21 @@ with open("banknotes.csv") as f:
     })
 
 # Separate data into training and testing groups
-holdout = int(0.40 * len(data))
+holdout = int(0.50 * len(data))
 random.shuffle(data)
 testing = data[:holdout]
 training = data[holdout:]
 
 # Train model on training set
 X_training = [row["evidence"] for row in training]
+y_training = [row["label"] for row in training]
+model.fit(X_training, y_training_)
+
+# Make predictions on the testing set
+X_training = [row["evidence"] for row in training]
 y_testing = [row["label"] for row in testing]
 predictions = model.predict(X_testing)
+
 
 # Compute how well we performed
 correct = 0
